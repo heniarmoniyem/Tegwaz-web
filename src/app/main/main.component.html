@@ -1,0 +1,223 @@
+<nz-layout class="app-layout">
+  <nz-sider
+    class="menu-sidebar"
+    nzCollapsible
+    nzWidth="256px"
+    nzBreakpoint="md"
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null"
+  >
+    <div class="sidebar-logo">
+      <a routerLink="entry">
+        <img src="../../assets/images/logo.png" alt="logo" />
+        <h1>Teguaz Portal</h1>
+      </a>
+    </div>
+    <!-- <nz-sider></nz-sider> -->
+
+    <ul
+      nz-menu
+      nzTheme="dark"
+      nzMode="inline"
+      [nzInlineCollapsed]="isCollapsed"
+    >
+      <li
+        nz-menu-item
+        routerLink="entry"
+        routerLinkActive="ant-menu-item-selected"
+      >
+        <i nz-icon nzType="dashboard"></i>
+        <span>Dashboard</span>
+      </li>
+      <li
+        nz-submenu
+        nzOpen
+        nzTitle="Admin"
+        nzIcon="user"
+        *ngIf="role == 'Super Admin'"
+      >
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a
+              routerLink="create_Admin_Account"
+              routerLinkActive="ant-menu-item-selected"
+              >Create Admin Account</a
+            >
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a
+              routerLink="view_Admin_Account"
+              routerLinkActive="ant-menu-item-selected"
+              >View Admins</a
+            >
+          </li>
+          <!-- <li nz-menu-item nzMatchRouter>
+            <a>Workplace</a>
+          </li> -->
+        </ul>
+      </li>
+      <li
+        nz-submenu
+        nzOpen
+        nzTitle="CRUD Operations"
+        nzIcon="swap"
+        *ngIf="role == 'Admin'"
+      >
+        <ul>
+          <li
+            nz-menu-item
+            nzMatchRouter
+            routerLink="employee_CRUD"
+            routerLinkActive="ant-menu-item-selected"
+          >
+            <a>Employee</a>
+          </li>
+          <li
+            nz-menu-item
+            nzMatchRouter
+            routerLink="bus_CRUD"
+            routerLinkActive="ant-menu-item-selected"
+          >
+            <a>Bus</a>
+          </li>
+          <li
+            nz-menu-item
+            nzMatchRouter
+            routerLink="destination_CRUD"
+            routerLinkActive="ant-menu-item-selected"
+          >
+            <a>Destination</a>
+          </li>
+        </ul>
+      </li>
+
+      <li
+        nz-submenu
+        nzOpen
+        nzTitle="Trips"
+        nzIcon="gold"
+        *ngIf="role != 'Super Admin'"
+      >
+        <ul>
+          <li
+            nz-menu-item
+            nzMatchRouter
+            routerLink="trip/planning"
+            routerLinkActive="ant-menu-item-selected"
+            *ngIf="role == 'Admin'"
+          >
+            <a>Planning</a>
+          </li>
+          <li
+            nz-menu-item
+            nzMatchRouter
+            routerLink="trip/list"
+            routerLinkActive="ant-menu-item-selected"
+            *ngIf="role == 'Admin' || role == 'Ticket Seller'"
+          >
+            <a>Appointed List</a>
+          </li>
+          <!-- <li
+            nz-menu-item
+            nzMatchRouter
+            routerLink="bus_CRUD"
+            routerLinkActive="ant-menu-item-selected"
+          >
+            <a>Bus</a>
+          </li>
+          <li
+            nz-menu-item
+            nzMatchRouter
+            routerLink="destination_CRUD"
+            routerLinkActive="ant-menu-item-selected"
+          >
+            <a>Destination</a>
+          </li> -->
+        </ul>
+      </li>
+      <!-- <li nz-submenu nzOpen nzTitle="Bus" nzIcon="key">
+        <ul></ul>
+      </li> -->
+      <li
+        nz-menu-item
+        routerLink="report"
+        routerLinkActive="ant-menu-item-selected"
+        *ngIf="role == 'Admin' || role == 'Super Admin'"
+      >
+        <i nz-icon nzType="file-text"></i>
+        <span>Report</span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="app-header">
+        <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
+          <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+            <i
+              class="trigger"
+              nz-icon
+              [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            ></i>
+          </span>
+          <li nz-menu-item>
+            <i
+              nz-icon
+              nzType="message"
+              nzTheme="outline"
+              style="font-size: 22px; color: #08c;"
+            ></i>
+          </li>
+          <li nz-menu-item>nav 2</li>
+
+          <!-- <li class="right-header">
+            <i
+              nz-icon
+              nzType="setting"
+              nzTheme="outline"
+              nzTooltipTitle="Setting"
+              nzTooltipPlacement="bottom"
+              nz-tooltip
+            ></i>
+          </li> -->
+          <li class="right-header" nz-row>
+            <div class="datetime">
+              <span>{{date}}</span> :
+              <span>{{time}}</span>
+            </div>
+            <a nz-dropdown [nzDropdownMenu]="menu">
+              <i nz-icon nzType="setting" nzTheme="outline"></i>
+            </a>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+              <ul nz-menu nzSelectable>
+                <li nz-menu-item>Account Sett.</li>
+                <li nz-menu-item>2nd menu item</li>
+                <li nz-menu-item>3rd menu item</li>
+                <li nz-menu-item nzDanger (click)="onLogout()">
+                  <i nz-icon nzType="logout" nzTheme="outline"></i>
+                  Logout
+                </li>
+              </ul>
+            </nz-dropdown-menu>
+          </li>
+        </ul>
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <nz-result
+          nzStatus="warning"
+          nzTitle="Driver Page Is Not Developed yet!!"
+          *ngIf="role == 'Driver'"
+        >
+          <div nz-result-extra>
+            <button nz-button nzType="primary" (click)="navigateToLogin()">
+              Return To Login Screen
+            </button>
+          </div>
+        </nz-result>
+        <router-outlet *ngIf="role != 'Driver'"></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

@@ -1,0 +1,62 @@
+<div nz-row>
+  <div nz-col nzSpan="24" [nzMd]="{span: 5}">
+    <form
+      nz-form
+      [formGroup]="validateForm"
+      class="login-form"
+      (ngSubmit)="submitForm()"
+    >
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Starting city!">
+          <nz-select formControlName="startingCity">
+            <nz-option nzValue="" nzLabel="Select Starting City"></nz-option>
+            <nz-option
+              *ngFor="let place of places"
+              [nzValue]="[place]"
+              [nzLabel]="place"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Destination city!">
+          <nz-select formControlName="destinationCity">
+            <nz-option nzValue="" nzLabel="Select Destination City"></nz-option>
+            <nz-option
+              *ngFor="let place of places"
+              [nzValue]="[place]"
+              [nzLabel]="place"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Departure Date!">
+          <nz-date-picker
+            formControlName="date"
+            nzFormat="yyyy-MM-dd"
+            [nzDisabledDate]="disabledDate"
+          ></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- <div nz-row class="login-form-margin">
+    <div nz-col [nzSpan]="12"></div>
+    <div nz-col [nzSpan]="12"></div>
+  </div> -->
+      <button
+        nz-button
+        class="login-form-button login-form-margin"
+        [nzType]="'primary'"
+      >
+        <i nz-icon nzType="search" nzTheme="outline"></i> Find Tickets
+      </button>
+    </form>
+  </div>
+  <div nz-col nzSpan="24" [nzMd]="{span: 1}"></div>
+  <div nz-col nzSpan="24" [nzMd]="{span: 12}">
+    <app-filtered-trip-list></app-filtered-trip-list>
+  </div>
+  <div nz-col nzSpan="24" [nzMd]="{span: 4}"></div>
+</div>

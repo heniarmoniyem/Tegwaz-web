@@ -1,0 +1,70 @@
+<!-- <nz-list class="demo-loadmore-list">
+  <nz-list-item>
+    <ng-container>
+      <nz-list-item-meta
+        nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+        nzDescription="Ant Design, a design language for background applications, is refined by Ant UED Team"
+      >
+        <nz-list-item-meta-title>
+          <a href="https://ng.ant.design">Ermiyas Solomon</a>
+        </nz-list-item-meta-title>
+      </nz-list-item-meta>
+      content
+      <ul nz-list-item-actions>
+        <nz-list-item-action><a>edit</a></nz-list-item-action>
+        <nz-list-item-action><a>more</a></nz-list-item-action>
+      </ul>
+    </ng-container>
+    <nz-skeleton
+      [nzAvatar]="true"
+      [nzActive]="true"
+      [nzTitle]="false"
+    >
+    </nz-skeleton>
+  </nz-list-item>
+</nz-list> -->
+<!-- ! language changing must be updated -->
+<span>
+  <nz-switch
+    [(ngModel)]="switchValue"
+    (ngModelChange)="switchChange()"
+  ></nz-switch>
+  Change Language
+</span>
+<hr />
+
+<h3 class="header">Scheduled Trips List</h3>
+<ul nz-list [nzDataSource]="trips" nzBordered nzSize="large">
+  <!-- <nz-list-header>Header</nz-list-header> -->
+  <li
+    nz-list-item
+    *ngFor="let trip of trips;let i=index"
+    nzNoFlex
+    (click)="viewDetail(i)"
+  >
+    <div class="progress-div">
+      <span
+        >{{ trip.availableSeats ? trip.availableSeats + ' Seats Are Available' :
+        'No Seats Are Available All Tickets Were Sold!!' }}</span
+      >
+      <progress
+        [max]="trip.totalSeatNo"
+        [value]="trip.totalSeatNo - trip.availableSeats"
+      ></progress>
+    </div>
+    <nz-list-item-meta-title>
+      <a>{{trip.date[languageIndex]}}</a>
+    </nz-list-item-meta-title>
+    <ul nz-list-item-actions>
+      <nz-list-item-action>
+        <a>{{ trip.busNo}}</a>
+      </nz-list-item-action>
+      <nz-list-item-action>
+        <a>{{ trip.driver}}</a>
+      </nz-list-item-action>
+    </ul>
+    {{ trip.startingCity[languageIndex] }} - {{
+    trip.destinationCity[languageIndex] }}
+  </li>
+  <!-- <nz-list-footer>Footer</nz-list-footer> -->
+</ul>

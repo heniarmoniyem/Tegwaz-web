@@ -1,0 +1,5 @@
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+private message: NzMessageService
+
+this.message.create(type, `This is a message of ${type}`);

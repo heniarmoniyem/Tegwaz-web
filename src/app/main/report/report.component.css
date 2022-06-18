@@ -1,0 +1,41 @@
+.content {
+  width: 75%;
+}
+
+.content p {
+  margin-bottom: 1em;
+}
+
+.content-link a {
+  margin-right: 16px;
+}
+
+.content-link a img {
+  margin-right: 8px;
+}
+
+.content-link {
+  margin-top: 10px;
+}
+
+.content-image img {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .content-image {
+    flex: 100%;
+    margin: 24px 0 0;
+  }
+}
+
+/* nz-page-header-content,
+nz-page-header-content div {
+  width: 100%;
+} */
+
+.graph {
+  width: 25%;
+  /* float: left; */
+  margin-top: 20px;
+}

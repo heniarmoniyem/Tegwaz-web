@@ -1,0 +1,2 @@
+const ethDateTime = require('ethiopian-calendar-date-converter');
+console.log(ethDateTime.converterDateTime.toEthiopian(new Date())); // ! IMPORTANT

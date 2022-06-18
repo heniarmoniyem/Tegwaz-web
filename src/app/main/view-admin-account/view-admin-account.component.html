@@ -1,0 +1,58 @@
+<!-- <div nz-row [nzGutter]="24" *ngIf="!isLoading">
+  <div *ngFor="let admin of admins; let i = index">
+    <div class="hover01 column">
+      <div>
+        <figure>
+
+          <h3>{{ admin.companyName.toUpperCase() }}</h3>
+          <img
+            width="300px"
+            height="300px"
+            [src]="admin.logoUrl"
+            alt="company logo.png"
+            (click)="openDrawer(i)"
+          />
+        </figure>
+        <span>Hover</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner> -->
+
+<div nz-row [nzGutter]="24" *ngIf="!isLoading">
+  <div
+    class="card"
+    *ngFor="let admin of admins; let i = index"
+    (click)="openDrawer(i)"
+  >
+    <div class="card-image">
+      <img
+        class="card-image image"
+        [src]="admin.logoUrl"
+        alt="company logo.png"
+      />
+    </div>
+    <div class="card-text">
+      <span class="date">{{admin.regDate}}</span>
+      <h2>{{ admin.companyName }}</h2>
+    </div>
+    <div class="card-stats">
+      <div class="stat">
+        <div class="value">{{ tripsCount[i] }}</div>
+        <div class="type">Coming Trips</div>
+      </div>
+      <div class="stat border">
+        <div class="value">{{ admin.bus.length }}</div>
+        <div class="type">buses</div>
+      </div>
+      <div class="stat">
+        <div class="value">{{ admin.place.length }}</div>
+        <div class="type">Destinations</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- [style.background-image]="admin.logoUrl" inline dynamic style -->

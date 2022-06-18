@@ -1,0 +1,10 @@
+{
+    "javascript.format.semicolons": "insert",
+    "typescript.format.semicolons": "insert",
+    "typescript.locale": "en",
+    "prettier.eslintIntegration": true,
+    "prettier.requireConfig": true,
+    "prettier.useTabs": true,
+    "prettier.tslintIntegration": true,
+    "editor.formatOnSave": true
+}

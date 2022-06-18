@@ -1,0 +1,38 @@
+<nz-table #basicTable [nzData]="Trips">
+  <thead>
+    <tr>
+      <th>Starting City</th>
+      <th>Destination City</th>
+      <th>Date</th>
+      <th>Passanger Name</th>
+      <th>Phone No.</th>
+      <th>Seat No.</th>
+      <th>Departure Place</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let trip of basicTable.data">
+      <td>{{ trip.startingCity.split(' / ')[0] }}</td>
+      <td>{{ trip.destinationCity.split(' / ')[0] }}</td>
+      <td>{{ trip.date.split(' / ')[0] }}</td>
+      <td>{{ trip.passengerName }}</td>
+      <td>{{ trip.phoneNo }}</td>
+      <td>{{ trip.seatNo }}</td>
+      <td>{{ trip.departurePlace }}</td>
+      <td>
+        <button
+          nz-popconfirm
+          nzPopconfirmTitle="Are you sure cancel your trip?"
+          nzPopconfirmPlacement="bottom"
+          (nzOnConfirm)="onCancelTrip(trip.tripId, trip.passangerId)"
+          nz-button
+          nzType="primary"
+          nzDanger
+        >
+          Cancel Trip
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

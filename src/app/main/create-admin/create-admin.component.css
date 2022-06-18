@@ -1,0 +1,31 @@
+nz-alert {
+  text-align: center;
+}
+
+.login-form {
+  max-width: 100%;
+}
+
+.login-form-margin {
+  margin-bottom: 16px;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
+}
+
+nz-form-item {
+  padding: 0 10px;
+}
+
+.error-border {
+  border: 2px solid red;
+}
+
+.logo-image {
+  margin-bottom: 20px;
+}

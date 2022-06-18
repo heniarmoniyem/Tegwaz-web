@@ -1,0 +1,247 @@
+<nz-alert [nzType]="'info'" [nzMessage]="'Assign Drivers To Buses'"> </nz-alert>
+<br />
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<form
+  *ngIf="!isLoading"
+  nz-form
+  [formGroup]="form"
+  [nzGutter]="16"
+  class="login-form"
+  (ngSubmit)="submitForm()"
+  nz-row
+>
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 6 }">
+    <nz-form-control nzErrorTip="Please input Bus NO.!">
+      <nz-input-group nzPrefixIcon="key">
+        <input
+          type="text"
+          nz-input
+          formControlName="busNo"
+          placeholder="Bus No."
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <!-- <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 8 }">
+    <nz-form-control nzErrorTip="Please input your Username!">
+      <nz-input-group nzPrefixIcon="user">
+        <input
+          type="text"
+          nz-input
+          formControlName="username"
+          placeholder="Username"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item> -->
+  <!-- <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 8 }">
+    <nz-form-control nzErrorTip="Please input valid Email Address!">
+      <nz-input-group nzPrefixIcon="mail">
+        <input
+          type="email"
+          nz-input
+          formControlName="email"
+          placeholder="Email Address"
+          (input)="onInput($event)"
+          [nzAutocomplete]="auto"
+        />
+        <nz-autocomplete #auto>
+          <nz-auto-option *ngFor="let option of options" [nzValue]="option">{{
+            option
+          }}</nz-auto-option>
+        </nz-autocomplete>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item> -->
+  <!-- <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 8 }">
+    <nz-form-control
+      nzErrorTip="Please input 'STRONG' Password - 6 characters!"
+    >
+      <nz-input-group nzPrefixIcon="lock">
+        <input
+          type="password"
+          nz-input
+          formControlName="password"
+          placeholder="Password"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item> -->
+
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 7 }">
+    <nz-form-control nzErrorTip="Please input Driver one name!">
+      <nz-input-group nzPrefixIcon="user">
+        <input
+          type="text"
+          nz-input
+          formControlName="driver1"
+          placeholder="1st Driver Name"
+          [nzAutocomplete]="driversList"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 7 }">
+    <nz-form-control nzErrorTip="Please input Driver two name!">
+      <nz-input-group nzPrefixIcon="user">
+        <input
+          type="text"
+          nz-input
+          formControlName="driver2"
+          placeholder="2nd Driver Name"
+          [nzAutocomplete]="driversList"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 4 }">
+    <nz-form-control nzErrorTip="Please input Bus Number Of Seats!1">
+      <nz-input-group nzPrefixIcon="key">
+        <input
+          type="number"
+          nz-input
+          formControlName="seatNo"
+          placeholder="Seat No."
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 12 }">
+    <nz-form-control nzErrorTip="Please input where head office found!">
+      <nz-select formControlName="headOffice">
+        <nz-option nzValue="" nzLabel="Choose Head Office City"></nz-option>
+        <nz-option nzValue="addis ababa" nzLabel="Addis Ababa"></nz-option>
+        <nz-option nzValue="baher dar" nzLabel="Baher Dar"></nz-option>
+        <nz-option nzValue="mekelle" nzLabel="Mekelle"></nz-option>
+        <nz-option nzValue="nekemte" nzLabel="Nekemte"></nz-option>
+        <nz-option nzValue="assosa" nzLabel="Assosa"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item> -->
+  <!-- <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 12 }">
+    <nz-form-control nzErrorTip="Please input valid Phone number!">
+      <nz-input-group nzPrefixIcon="phone">
+        <input
+          type="text"
+          nz-input
+          formControlName="phoneNumber"
+          placeholder="Phone number"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item> -->
+
+  <button
+    nz-col
+    nzSpan="24"
+    [nzSm]="{ span: 24 }"
+    nz-button
+    class="login-form-button login-form-margin"
+    [nzType]="'primary'"
+  >
+    {{ editMode ? "Update Account" : "Create Account" }}
+  </button>
+  Or <a (click)="resetForm()"> Reset Form! </a>
+</form>
+<br />
+<br />
+<nz-table #editRowTable nzBordered [nzData]="listOfBuses" nzTableLayout="fixed">
+  <thead>
+    <tr>
+      <th nzWidth="20%">BUS NO.</th>
+      <th nzWidth="25%">DRIVER 1</th>
+      <th nzWidth="25%">DRIVER 2</th>
+      <th nzWidth="10%">Seat No.</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of listOfBuses; let id = index">
+      <ng-container *ngIf="!editCache[id].edit; else editTemplate">
+        <td>{{ data.busNo }}</td>
+        <td>{{ data.drivers[0] }}</td>
+        <td>{{ data.drivers[1] }}</td>
+        <td>{{ data.seatNo }}</td>
+        <td>
+          <a (click)="startEdit(id)">Edit</a> -
+          <a
+            class="delete-btn"
+            nz-popconfirm
+            nzPopconfirmTitle="Are you sure delete this Employee?"
+            nzPopconfirmPlacement="left"
+            (nzOnConfirm)="onDelete(id)"
+            ><i nz-icon nzType="delete" nzTheme="outline"></i> Delete</a
+          >
+        </td>
+      </ng-container>
+      <ng-template #editTemplate>
+        <td>
+          <input
+            type="text"
+            [ngClass]="{
+              editError: editError && editCache[id].data.busNo == ''
+            }"
+            nz-input
+            [(ngModel)]="editCache[id].data.busNo"
+          />
+        </td>
+        <td>
+          <input
+            [ngClass]="{
+              editError: editError && editCache[id].data.drivers[0] == ''
+            }"
+            type="text"
+            nz-input
+            [(ngModel)]="editCache[id].data.drivers[0]"
+            [nzAutocomplete]="driversList"
+          />
+        </td>
+        <td>
+          <input
+            [ngClass]="{
+              editError: editError && editCache[id].data.drivers[1] == ''
+            }"
+            type="text"
+            nz-input
+            [(ngModel)]="editCache[id].data.drivers[1]"
+            [nzAutocomplete]="driversList"
+          />
+        </td>
+        <td>
+          <input
+            [ngClass]="{
+              editError:
+                editError &&
+                editCache[id].data.seatNo == null &&
+                editCache[id].data.seatNo == 0
+            }"
+            type="number"
+            nz-input
+            [(ngModel)]="editCache[id].data.seatNo"
+          />
+        </td>
+        <td>
+          <a
+            class="save"
+            nz-popconfirm
+            nzPopconfirmTitle="Are you sure to update this Employee informa?"
+            nzPopconfirmPlacement="left"
+            (nzOnConfirm)="saveEdit(id)"
+            >Save</a
+          >
+          <a (click)="cancelEdit(id)" disabled="true">Cancel</a>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</nz-table>
+
+<!-- auto complete -->
+<nz-autocomplete #driversList>
+  <nz-auto-option *ngFor="let option of Drivers" [nzValue]="option.fullName"
+    >{{ option.fullName }}</nz-auto-option
+  >
+</nz-autocomplete>

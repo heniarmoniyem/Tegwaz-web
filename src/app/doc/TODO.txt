@@ -1,0 +1,32 @@
+1. write code for validate drivers
+2. trips reseting mode custom resetting
+3. check all the functionality then
+4. host to firebase for the application
+
+when save button clicked
+- make ontrip array which will contain the planned date for the bus
+- when trip registered bus onTrip attribute filled pushed
+{
+tid: tripId
+date: tripDate
+}
+
+when the switch clicked
+- selected bus next date status must be checked
+
+
+todo today
+- when the date is selected only available buses must be showed on the bus select
+
+
+
+
+
+
+when the app opened
+- iterate to planned trips then distribute trips to their company
+- delete {} of ontrip array by comparing the date
+
+
+validations
+

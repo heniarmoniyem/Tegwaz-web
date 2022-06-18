@@ -1,0 +1,175 @@
+<nz-alert [nzType]="'info'" [nzMessage]="'Create Admin Form'"> </nz-alert>
+<br />
+<br />
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<nz-collapse>
+	<nz-collapse-panel nzHeader="ADD DESTINATION" nzActive="false">
+		<p style="margin: 0;"></p>
+		<form
+			*ngIf="!isLoading"
+			nz-form
+			[formGroup]="form"
+			[nzGutter]="16"
+			class="login-form"
+			(ngSubmit)="submitForm()"
+			nz-row
+		>
+			<nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 8 }">
+				<nz-form-control nzErrorTip="Please input Place Name!">
+					<nz-input-group nzPrefixIcon="environment">
+						<input
+							type="text"
+							nz-input
+							formControlName="destination"
+							placeholder="Place Name"
+						/>
+					</nz-input-group>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 8 }">
+				<nz-form-control
+					nzErrorTip="please insert 'AMHARIC' version of the place name!"
+				>
+					<nz-input-group nzPrefixIcon="environment">
+						<input
+							type="text"
+							nz-input
+							formControlName="amharicDestination"
+							placeholder="Place Name in AMHARIC"
+						/>
+					</nz-input-group>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 8 }">
+				<nz-form-control nzErrorTip="Please input Price!">
+					<nz-input-group nzPrefixIcon="money-collect">
+						<input
+							type="number"
+							nz-input
+							formControlName="price"
+							placeholder="Price"
+						/>
+					</nz-input-group>
+				</nz-form-control>
+			</nz-form-item>
+
+			<!-- <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 8 }">
+        <nz-form-control nzErrorTip="Please input Discount!">
+          <nz-input-group nzPrefixIcon="right" nzSuffixIcon="percentage">
+            <input
+              type="number"
+              nz-input
+              formControlName="discount"
+              placeholder="Discount (%)"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item> -->
+
+			<button
+				nz-col
+				nzSpan="24"
+				[nzSm]="{ span: 24 }"
+				nz-button
+				class="login-form-button login-form-margin"
+				[nzType]="'primary'"
+			>
+				Add Place
+			</button>
+			Or <a (click)="resetForm()"> Reset Form! </a>
+		</form>
+	</nz-collapse-panel>
+</nz-collapse>
+
+<br />
+<br />
+<nz-table
+	#editRowTable
+	nzBordered
+	[nzData]="listOfPlaces"
+	nzTableLayout="fixed"
+>
+	<thead>
+		<tr>
+			<th nzWidth="20%">DESTINATION NAME</th>
+			<th nzWidth="20%">PRICE</th>
+			<th nzWidth="20%">DISCOUNT (%)</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let data of listOfPlaces; let id = index">
+			<ng-container *ngIf="!editCache[id].edit; else editTemplate">
+				<td>{{ data.destination }}</td>
+				<td>{{ data.price }} Birr</td>
+				<td>
+					{{ data.discount.percentage }} % <br />
+					{{ data.discount.reason }}
+				</td>
+				<td>
+					<a (click)="startEdit(id)">Edit</a> -
+					<a
+						class="delete-btn"
+						nz-popconfirm
+						nzPopconfirmTitle="Are you sure delete this Employee?"
+						nzPopconfirmPlacement="left"
+						(nzOnConfirm)="onDelete(id)"
+						><i nz-icon nzType="delete" nzTheme="outline"></i> Delete</a
+					>
+				</td>
+			</ng-container>
+			<ng-template #editTemplate>
+				<td>
+					<input
+						type="text"
+						nz-input
+						[(ngModel)]="editCache[id].data.destination"
+					/>
+				</td>
+				<td>
+					<input
+						type="number"
+						nz-input
+						[(ngModel)]="editCache[id].data.price"
+					/>
+				</td>
+				<td>
+					<input
+						type="number"
+						nz-input
+						(change)="showModal()"
+						[(ngModel)]="editCache[id].data.discount.percentage"
+					/>
+				</td>
+				<td>
+					<a
+						class="save"
+						nz-popconfirm
+						nzPopconfirmTitle="Are you sure to update this DESTINATION INFORMATION?"
+						nzPopconfirmPlacement="left"
+						(nzOnConfirm)="saveEdit(id)"
+						>Save</a
+					>
+					<a (click)="cancelEdit(id)">Cancel</a>
+				</td>
+				<nz-modal
+					*ngIf="isVisible"
+					[(nzVisible)]="isVisible"
+					nzClosable="false"
+					nzCancelDisabled="true"
+					nzTitle="Input Reason For The "
+					(nzOnOk)="discountAdded(editCache[id].data)"
+				>
+					<ng-container *nzModalContent>
+						<input
+							type="text"
+							nz-input
+							[disabled]="editCache[id].data.discount.percentage == 0"
+							[(ngModel)]="editCache[id].data.discount.reason"
+						/>
+					</ng-container>
+				</nz-modal>
+			</ng-template>
+		</tr>
+	</tbody>
+</nz-table>

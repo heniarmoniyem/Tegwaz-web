@@ -1,0 +1,100 @@
+<nz-drawer
+  [nzVisible]="visible"
+  [nzWidth]="640"
+  [nzClosable]="true"
+  (nzOnClose)="close()"
+  *ngIf="admin"
+>
+  <ng-container *nzDrawerContent>
+    <p class="title" style="margin-bottom: 24px;">Company Profile</p>
+    <img
+      nz-image
+      width="200px"
+      height="200px"
+      [nzSrc]="admin.logoUrl"
+      alt="company logo.png"
+    />
+    <br />
+    <nz-descriptions [nzColumn]="2" nzTitle="">
+      <nz-descriptions-item nzTitle="Company Name" [nzSpan]="1"
+        >{{ admin.companyName }}</nz-descriptions-item
+      >
+      <nz-descriptions-item nzTitle="Account Username" [nzSpan]="1"
+        >{{ admin.username }}</nz-descriptions-item
+      >
+      <nz-descriptions-item nzTitle="City" [nzSpan]="1"
+        >{{ admin.headOffice }}</nz-descriptions-item
+      >
+      <nz-descriptions-item nzTitle="Country" [nzSpan]="1"
+        >Ethiopia</nz-descriptions-item
+      >
+      <nz-descriptions-item nzTitle="Registration Date" [nzSpan]="2"
+        >{{ admin.regDate }}</nz-descriptions-item
+      >
+      <nz-descriptions-item nzTitle="Website" [nzSpan]="2">
+        <a [href]="admin.website" target="_blank">{{ admin.website }}</a>
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Message" [nzSpan]="2"
+        >Make things as simple as possible but no simpler.</nz-descriptions-item
+      >
+    </nz-descriptions>
+    <nz-divider></nz-divider>
+    <!-- <nz-descriptions [nzColumn]="2" nzTitle="Company"> -->
+    <!-- <nz-descriptions-item nzTitle="Position" [nzSpan]="1"
+        >Programmer</nz-descriptions-item
+      >
+      <nz-descriptions-item nzTitle="Responsibilities" [nzSpan]="1"
+        >Coding</nz-descriptions-item
+      >
+      <nz-descriptions-item nzTitle="Department" [nzSpan]="1"
+        >AFX</nz-descriptions-item
+      >
+      <nz-descriptions-item nzTitle="Supervisor" [nzSpan]="1"
+        >Lin</nz-descriptions-item
+      > -->
+    <!-- <nz-descriptions-item nzTitle="Skills" [nzSpan]="2">
+        C / C + +, data structures, software engineering, operating systems,
+        computer networks, databases, compiler theory, computer architecture,
+        Microcomputer Principle and Interface Technology, Computer English,
+        Java, ASP, etc.
+      </nz-descriptions-item> -->
+    <!-- </nz-descriptions> -->
+    <nz-divider></nz-divider>
+    <nz-descriptions [nzColumn]="2" nzTitle="Contacts">
+      <nz-descriptions-item nzTitle="Email" [nzSpan]="1"
+        >{{ admin.email }}</nz-descriptions-item
+      >
+      <nz-descriptions-item nzTitle="Phone Number" [nzSpan]="1"
+        >{{ "0" + admin.phoneNumber }}</nz-descriptions-item
+      >
+      <!-- <nz-descriptions-item nzTitle="Github" [nzSpan]="2">
+        <a href="https://github.com/NG-ZORRO/ng-zorro-antd" target="_blank"
+          >github.com/NG-ZORRO/ng-zorro-antd</a
+        >
+      </nz-descriptions-item> -->
+    </nz-descriptions>
+    <br />
+    <br />
+    <nz-descriptions
+      [nzColumn]="2"
+      [nzTitle]="avatarTemplate"
+    ></nz-descriptions>
+    <button
+      nz-popconfirm
+      class="delete-btn"
+      nzType="primary"
+      nzPopconfirmTitle="Are you sure delete this Admin?"
+      (nzOnConfirm)="onDelete()"
+      nzDanger
+      nz-button
+    >
+      D E L E T E
+    </button>
+  </ng-container>
+</nz-drawer>
+<ng-template #avatarTemplate>
+  <i nz-icon class="edit-icon" nzType="edit" nzTheme="outline"></i>
+  Edit Profile
+</ng-template>
+<!-- loading spinner -->
+<!-- (click)="onEdit()" -->

@@ -1,0 +1,23 @@
+nz-form-item {
+  padding: 0 10px;
+}
+
+.save {
+  margin-right: 8px;
+}
+
+.delete-btn {
+  color: red;
+}
+
+.delete-btn:hover {
+  color: rgb(180, 0, 0);
+}
+
+.editError {
+  border: 1px solid red;
+}
+
+nz-alert {
+  text-align: center;
+}

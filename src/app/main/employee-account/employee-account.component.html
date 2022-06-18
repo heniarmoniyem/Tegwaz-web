@@ -1,0 +1,201 @@
+<nz-alert [nzType]="'info'" [nzMessage]="'Create Account For Employees'">
+</nz-alert>
+<br />
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<form
+  *ngIf="!isLoading"
+  nz-form
+  [formGroup]="form"
+  [nzGutter]="16"
+  class="login-form"
+  (ngSubmit)="submitForm()"
+  nz-row
+>
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 8 }">
+    <nz-form-control nzErrorTip="Please input Employee Full Name!">
+      <nz-input-group nzPrefixIcon="user">
+        <input
+          type="text"
+          nz-input
+          formControlName="fullName"
+          placeholder="Full Name"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <!-- <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 8 }">
+    <nz-form-control nzErrorTip="Please input your Username!">
+      <nz-input-group nzPrefixIcon="user">
+        <input
+          type="text"
+          nz-input
+          formControlName="username"
+          placeholder="Username"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item> -->
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 8 }">
+    <nz-form-control nzErrorTip="Please input valid Email Address!">
+      <nz-input-group nzPrefixIcon="mail">
+        <input
+          type="email"
+          nz-input
+          formControlName="email"
+          placeholder="Email Address"
+          (input)="onInput($event)"
+          [nzAutocomplete]="auto"
+        />
+        <nz-autocomplete #auto>
+          <nz-auto-option *ngFor="let option of options" [nzValue]="option"
+            >{{ option }}</nz-auto-option
+          >
+        </nz-autocomplete>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 8 }">
+    <nz-form-control
+      nzErrorTip="Please input 'STRONG' Password - 6 characters!"
+    >
+      <nz-input-group nzPrefixIcon="lock">
+        <input
+          type="password"
+          nz-input
+          formControlName="password"
+          placeholder="Password"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 12 }">
+    <nz-form-control nzErrorTip="Please input Employee role!">
+      <nz-input-group nzPrefixIcon="right">
+        <input
+          type="text"
+          nz-input
+          formControlName="role"
+          placeholder="Employee Role"
+          [nzAutocomplete]="empRole"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 12 }">
+    <nz-form-control nzErrorTip="Please input where head office found!">
+      <nz-select formControlName="headOffice">
+        <nz-option nzValue="" nzLabel="Choose Head Office City"></nz-option>
+        <nz-option nzValue="addis ababa" nzLabel="Addis Ababa"></nz-option>
+        <nz-option nzValue="baher dar" nzLabel="Baher Dar"></nz-option>
+        <nz-option nzValue="mekelle" nzLabel="Mekelle"></nz-option>
+        <nz-option nzValue="nekemte" nzLabel="Nekemte"></nz-option>
+        <nz-option nzValue="assosa" nzLabel="Assosa"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item> -->
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 12 }">
+    <nz-form-control nzErrorTip="Please input valid Phone number!">
+      <nz-input-group nzPrefixIcon="phone">
+        <input
+          type="text"
+          nz-input
+          formControlName="phoneNumber"
+          placeholder="Phone number"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <button
+    nz-col
+    nzSpan="24"
+    [nzSm]="{ span: 24 }"
+    nz-button
+    class="login-form-button login-form-margin"
+    [nzType]="'primary'"
+  >
+    {{ editMode ? "Update Account" : "Create Account" }}
+  </button>
+  Or <a (click)="resetForm()"> Reset Form! </a>
+</form>
+<br />
+<br />
+<nz-table
+  #editRowTable
+  nzBordered
+  [nzData]="listOfEmployees"
+  nzTableLayout="fixed"
+>
+  <thead>
+    <tr>
+      <th nzWidth="25%">FULL NAME</th>
+      <th nzWidth="30%">ROLE</th>
+      <th nzWidth="25%">PHONE NO.</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of listOfEmployees; let id = index">
+      <ng-container *ngIf="!editCache[id].edit; else editTemplate">
+        <td>{{ data.fullName }}</td>
+        <td>{{ data.role }}</td>
+        <td>{{ data.phoneNumber }}</td>
+        <td>
+          <a (click)="startEdit(id)">Edit</a> -
+          <a
+            class="delete-btn"
+            nz-popconfirm
+            nzPopconfirmTitle="Are you sure delete this Employee?"
+            nzPopconfirmPlacement="left"
+            (nzOnConfirm)="onDelete(id)"
+            ><i nz-icon nzType="delete" nzTheme="outline"></i> Delete</a
+          >
+        </td>
+      </ng-container>
+      <ng-template #editTemplate>
+        <td>
+          <input
+            type="text"
+            nz-input
+            [(ngModel)]="editCache[id].data.fullName"
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            nz-input
+            [(ngModel)]="editCache[id].data.role"
+            [nzAutocomplete]="empRole"
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            nz-input
+            [(ngModel)]="editCache[id].data.phoneNumber"
+          />
+        </td>
+        <td>
+          <a
+            class="save"
+            nz-popconfirm
+            nzPopconfirmTitle="Are you sure to update this Employee informa?"
+            nzPopconfirmPlacement="left"
+            (nzOnConfirm)="saveEdit(id)"
+            >Save</a
+          >
+          <a (click)="cancelEdit(id)">Cancel</a>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</nz-table>
+
+<!-- auto complete -->
+<nz-autocomplete #empRole>
+  <nz-auto-option *ngFor="let option of empRoles" [nzValue]="option"
+    >{{ option }}</nz-auto-option
+  >
+</nz-autocomplete>

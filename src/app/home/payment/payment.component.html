@@ -1,0 +1,261 @@
+<nz-row [nzGutter]="10">
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/abay bank.png"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/abay bank.png')"
+    />
+  </nz-col>
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/abyssinia bank.png"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/abyssinia bank.png')"
+    />
+  </nz-col>
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/adis international bank.png"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/adis international bank.png')"
+    />
+  </nz-col>
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/awash international bank.jpg"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/awash international bank.jpg')"
+    />
+  </nz-col>
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/berhan bank.jpg"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/berhan bank.jpg')"
+    />
+  </nz-col>
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/bunna bank.jpg"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/bunna bank.jpg')"
+    />
+  </nz-col>
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/commercial bank.jpg"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/commercial bank.jpg')"
+    />
+  </nz-col>
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/cooperative bank of oromia.jpg"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/cooperative bank of oromia.jpg')"
+    />
+  </nz-col>
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/dashen bank.png"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/dashen bank.png')"
+    />
+  </nz-col>
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/debub global bank.jpg"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/debub global bank.jpg')"
+    />
+  </nz-col>
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/enat bank.jpg"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/enat bank.jpg')"
+    />
+  </nz-col>
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/hibret bank.png"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/hibret bank.png')"
+    />
+  </nz-col>
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/hijra bank.jpg"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/hijra bank.jpg')"
+    />
+  </nz-col>
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/lion bank.jpg"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/lion bank.jpg')"
+    />
+  </nz-col>
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/nib bank.jpg"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/nib bank.jpg')"
+    />
+  </nz-col>
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/oromia international bank.jpg"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/oromia international bank.jpg')"
+    />
+  </nz-col>
+  <nz-col nzSpan="3">
+    <img
+      width="160px"
+      height="100px"
+      src="../../../assets/images/Banks/wegagen bank.png"
+      alt=""
+      (click)="paymentSelected('../../../assets/images/Banks/wegagen bank.png')"
+    />
+  </nz-col>
+</nz-row>
+
+<!-- ? payment modal -->
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Payment"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+>
+  <ng-container *nzModalContent>
+    <img
+      class="modal-image"
+      width="160px"
+      height="100px"
+      [src]="imgSrc"
+      alt=""
+    />
+    <nz-divider nzDashed [nzText]="text">
+      <ng-template #text>
+        <i nz-icon nzType="edit"></i>
+        Fill Payment Form
+      </ng-template>
+    </nz-divider>
+    <form
+      nz-form
+      [formGroup]="validateForm"
+      class="login-form"
+      (ngSubmit)="submitForm()"
+    >
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your fullname!">
+          <nz-input-group nzPrefixIcon="user">
+            <input
+              type="text"
+              nz-input
+              formControlName="fullName"
+              placeholder="Full Name"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Phone Number!">
+          <nz-input-group nzPrefixIcon="phone">
+            <input
+              type="text"
+              nz-input
+              formControlName="phoneNumber"
+              placeholder="Phone Number"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Account Number!">
+          <nz-input-group nzPrefixIcon="lock">
+            <input
+              type="text"
+              nz-input
+              formControlName="accountNumber"
+              placeholder="Account Number"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <!-- todo make it invisible -->
+      <!-- <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your pin!">
+          <nz-input-group nzPrefixIcon="lock">
+            <input
+              type="text"
+              nz-input
+              formControlName="pin"
+              placeholder="pin"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item> -->
+
+      <button
+        nz-button
+        class="login-form-button login-form-margin"
+        [nzType]="'primary'"
+      >
+        Confirm Payment
+      </button>
+    </form>
+  </ng-container>
+</nz-modal>
+
+<!-- payment description -->
+<nz-modal
+  [(nzVisible)]="isPDVisible"
+  nzTitle="Payment Description"
+  (nzOnCancel)="handlePDCancel()"
+  (nzOnOk)="handlePDOk()"
+>
+  <ng-container *nzModalContent>
+    Payment Description
+    <input
+      nz-input
+      type="password"
+      placeholder="Basic usage"
+      [(ngModel)]="pin"
+    />
+  </ng-container>
+</nz-modal>

@@ -1,0 +1,203 @@
+<nz-page-header class="site-page-header">
+  <!--avatar-->
+  <nz-avatar
+    nz-page-header-avatar
+    nzSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2X2D7kE-J3aSOmsz329xs8G6VViJyYo-hGw&usqp=CAU"
+  >
+  </nz-avatar>
+
+  <!--title-->
+  <nz-page-header-title>Audit Report</nz-page-header-title>
+
+  <!--subtitle-->
+  <nz-page-header-subtitle
+    ><i nz-icon nzType="caret-right" nzTheme="outline"></i
+    ><i nz-icon nzType="caret-right" nzTheme="outline"></i
+  ></nz-page-header-subtitle>
+
+  <!--tags-->
+  <nz-page-header-tags>
+    <nz-tag [nzColor]="'blue'">Running</nz-tag>
+  </nz-page-header-tags>
+
+  <!--extra-->
+  <nz-page-header-extra>
+    <button nz-button nzType="primary">Per Trip</button>
+    <button nz-button disabled>Daily</button>
+    <button nz-button disabled>Weekly</button>
+    <button
+      nz-button
+      nzNoAnimation
+      nz-dropdown
+      [nzDropdownMenu]="menu"
+      style="border: none; padding: 0;"
+    >
+      <i
+        nz-icon
+        nzType="ellipsis"
+        nzTheme="outline"
+        style="font-size: 20px; vertical-align: top;"
+      ></i>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item>
+          <i nz-icon nzType="search" nzTheme="outline"></i>
+          <span>Search</span>
+        </li>
+        <li nz-menu-item>
+          <i nz-icon nzType="sort-ascending" nzTheme="outline"></i>
+          <span>Sort</span>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+  </nz-page-header-extra>
+
+  <!--content-->
+  <nz-page-header-content
+    *ngFor="let audit of auditReport; let auditIndex = index"
+  >
+    <div nz-row>
+      <div class="content" nz-col nzSpan="24" [nzMd]="{ span: 20 }">
+        <p nz-paragraph>
+          Audit Report For Single Trip!!
+        </p>
+        <nz-descriptions
+          nzBordered
+          nzSize="small"
+          *ngFor="let report of audit.tripReport; let i = index"
+        >
+          <nz-descriptions-item
+            nzTitle="Report Detail"
+            [nzSpan]="6"
+            *ngIf="i == 0"
+            >{{ audit.tripDetail }}</nz-descriptions-item
+          >
+          <nz-descriptions-item nzTitle="Payment Type"
+            >{{ report.label }}</nz-descriptions-item
+          >
+          <nz-descriptions-item nzTitle="No Of Passenger"
+            >{{ report.passengerNo }}</nz-descriptions-item
+          >
+          <nz-descriptions-item nzTitle="Amount"
+            >{{ report.amount }} Birr</nz-descriptions-item
+          >
+
+          <!--  -->
+          <!-- <nz-descriptions-item nzTitle="">Branch</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="">33</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="">3000 Birr</nz-descriptions-item> -->
+          <!--  -->
+          <!-- <nz-descriptions-item nzTitle="">Bank</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="">22</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="">3000 Birr</nz-descriptions-item> -->
+        </nz-descriptions>
+        <!-- !profit share code here -->
+        <br *ngIf="isShareVisible && isShareKeyValue == audit.tripKey" />
+        <h3 *ngIf="isShareVisible && isShareKeyValue == audit.tripKey">
+          Profit Share
+        </h3>
+        <div *ngIf="isShareVisible && isShareKeyValue == audit.tripKey">
+          <nz-descriptions nzBordered *ngFor="let share of shareList">
+            <nz-descriptions-item
+              [nzTitle]="share.companyName + 'Share'"
+              [nzSpan]="6"
+              >{{ share.share }} Birr</nz-descriptions-item
+            >
+            <!-- <nz-descriptions-item nzTitle="Oda Bus. Share" [nzSpan]="6"
+              >200 Birr</nz-descriptions-item -->
+            >
+          </nz-descriptions>
+        </div>
+        <div class="content-link">
+          <a (click)="displayBranchAuditReport(audit.tripKey)">
+            <img
+              src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg"
+              alt="start"
+            />Audit Branch Office
+          </a>
+          <a (click)="calculateShare(audit.tripKey, auditIndex)">
+            <img
+              src="https://gw.alipayobjects.com/zos/rmsportal/NbuDUAuBlIApFuDvWiND.svg"
+              alt="info"
+            />Calculate Share
+          </a>
+          <a (click)="displayTripDetail(audit.tripKey)">
+            <img
+              src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
+              alt="doc"
+            />View Trip Detail
+          </a>
+          <label
+            nz-checkbox
+            nz-popconfirm
+            [(ngModel)]="role == 'Admin' ? audit.status[0] : audit.status[2]"
+            nzPopconfirmTitle="Are you sure delete this task?"
+            nzPopconfirmPlacement="bottom"
+            (nzOnConfirm)="updateStatus(audit.tripKey)"
+            >Seen</label
+          >
+        </div>
+      </div>
+      <div class="graph" nz-col nzSpan="24" [nzMd]="{ span: 8 }">
+        <div [id]="audit.tripKey"></div>
+      </div>
+    </div>
+    <nz-divider></nz-divider>
+  </nz-page-header-content>
+</nz-page-header>
+
+<!-- modal -->
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Branch Office Audit Report Per Trip"
+  (nzOnCancel)="hideModal()"
+  (nzOnOk)="hideModal()"
+>
+  <ng-container *nzModalContent>
+    <nz-table #basicTable [nzData]="branchReport">
+      <thead>
+        <tr>
+          <th>Branch Sales Name</th>
+          <th>No. Ticket Sold</th>
+          <th>Total Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{ data.label }}</td>
+          <td>{{ data.passengerNo }}</td>
+          <td>{{ data.amount }} Birr</td>
+        </tr>
+      </tbody>
+    </nz-table>
+
+    <!-- trip detail -->
+  </ng-container>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="isTripVisible"
+  nzTitle="Trip Passengers Information"
+  (nzOnCancel)="hideModal()"
+  (nzOnOk)="hideModal()"
+>
+  <ng-container *nzModalContent>
+    <nz-table #basicTable2 [nzData]="tripList">
+      <thead>
+        <tr>
+          <th>Passenger Full Name</th>
+          <th>Phone Number</th>
+          <th>Used Booking Method</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable2.data">
+          <td>{{ data.name }}</td>
+          <td>{{ data.phoneNo }}</td>
+          <td>By {{ data.bookingMethod }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </ng-container>
+</nz-modal>

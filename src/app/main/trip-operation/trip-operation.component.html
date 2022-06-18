@@ -1,0 +1,275 @@
+<nz-collapse>
+  <nz-collapse-panel nzHeader="ADD STARTING PLACE" nzActive="false">
+    <p style="margin: 0;"></p>
+    <form
+      *ngIf="!isLoading"
+      nz-form
+      [formGroup]="SPForm"
+      [nzGutter]="16"
+      class="login-form"
+      (ngSubmit)="submitSPForm()"
+      nz-row
+    >
+      <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 6 }">
+        <nz-form-control nzErrorTip="Please select City Name!">
+          <nz-select formControlName="city">
+            <nz-option nzValue="" nzLabel="Starting City"></nz-option>
+            <nz-option
+              nzValue="addis ababa / አዲስ አበባ"
+              nzLabel="addis ababa / አዲስ አበባ"
+            ></nz-option>
+            <nz-option
+              *ngFor="let city of citiesList"
+              [nzValue]="city"
+              [nzLabel]="city"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 6 }">
+        <nz-form-control nzErrorTip="please insert the name of the place!">
+          <nz-input-group nzPrefixIcon="environment">
+            <input
+              type="text"
+              nz-input
+              formControlName="start"
+              placeholder="starting place"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 6 }">
+        <nz-form-control
+          nzErrorTip="please insert 'AMHARIC' version of the starting place name!"
+        >
+          <nz-input-group nzPrefixIcon="environment">
+            <input
+              type="text"
+              nz-input
+              formControlName="amharicStart"
+              placeholder="starting place in 'AMHARIC'"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <button
+        nz-col
+        nzSpan="24"
+        [nzSm]="{ span: 6 }"
+        nz-button
+        class="login-form-button login-form-margin"
+        [nzType]="'primary'"
+      >
+        Add Starting Place
+      </button>
+    </form>
+  </nz-collapse-panel>
+</nz-collapse>
+<br />
+<br />
+<nz-switch [(ngModel)]="returningTrip" (click)="clickSwitch()"></nz-switch>
+<span class="switch-label">Plan Returning Trip</span>
+<br />
+<nz-divider nzDashed [nzText]="text">
+  <ng-template #text
+    ><i nz-icon nzType="plus"></i> Trip Planning Form</ng-template
+  >
+</nz-divider>
+
+<form
+  *ngIf="!isLoading"
+  nz-form
+  [formGroup]="Form"
+  [nzGutter]="16"
+  class="login-form"
+  nz-row
+>
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 3 }">
+    <nz-form-control nzErrorTip="please select Trip Date!">
+      <nz-date-picker
+        formControlName="date"
+        (ngModelChange)="dateChanged()"
+      ></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 3 }">
+    <nz-form-control nzErrorTip="please select Trip Starting Time!">
+      <nz-time-picker
+        formControlName="time"
+        [nzMinuteStep]="30"
+        [nzUse12Hours]="true"
+        nzFormat="h:mm a"
+      ></nz-time-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 6 }">
+    <nz-form-control nzErrorTip="Please select starting City Name!">
+      <nz-select formControlName="startingCity" (ngModelChange)="SPchanged()">
+        <nz-option nzValue="" nzLabel="Starting City" selected></nz-option>
+        <nz-option
+          nzValue="addis ababa / አዲስ አበባ"
+          nzLabel="addis ababa / አዲስ አበባ"
+        ></nz-option>
+        <nz-option
+          *ngFor="let city of citiesList"
+          [nzValue]="city"
+          [nzLabel]="city"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 6 }">
+    <nz-form-control nzErrorTip="Please select destination City Name!">
+      <nz-select
+        formControlName="destinationCity"
+        (ngModelChange)="SPchanged()"
+      >
+        <nz-option nzValue="" nzLabel="Destination City" selected></nz-option>
+        <nz-option
+          nzValue="addis ababa / አዲስ አበባ"
+          nzLabel="addis ababa / አዲስ አበባ"
+        ></nz-option>
+        <nz-option
+          *ngFor="let city of citiesList"
+          [nzValue]="city"
+          [nzLabel]="city"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 6 }">
+    <nz-form-control nzErrorTip="Please select Bus!">
+      <!-- <nz-select
+        formControlName="busNo"
+        [nzOptions]="busesList"
+        (ngModelChange)="showDriversModal()"
+      >
+        <nz-option nzValue="" nzLabel="Bus NO."></nz-option>
+
+      </nz-select> -->
+      <nz-select formControlName="busNo" (ngModelChange)="showDriversModal()">
+        <nz-option nzValue="" nzLabel="Bus NO."></nz-option>
+        <nz-option
+          *ngFor="let bus of busesList"
+          [nzValue]="bus.busNo"
+          [nzLabel]="bus.busNo"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<br />
+<span>TRIP STARTING PLACES LIST; SELECT AT LEAST ONE</span> <br />
+<nz-checkbox-group
+  [(ngModel)]="SPList"
+  (ngModelChange)="log('firstTrip')"
+></nz-checkbox-group>
+<br />
+<nz-divider nzDashed [nzText]="text" *ngIf="returningTrip">
+  <ng-template #text
+    ><i nz-icon nzType="plus"></i> Return Trip Planning Form</ng-template
+  >
+</nz-divider>
+
+<form
+  *ngIf="returningTrip"
+  nz-form
+  [formGroup]="returnForm"
+  [nzGutter]="16"
+  class="login-form"
+  nz-row
+>
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 3 }">
+    <nz-form-control nzErrorTip="please select Trip Date!">
+      <nz-date-picker formControlName="date"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 3 }">
+    <nz-form-control nzErrorTip="please select Trip Starting Time!">
+      <nz-time-picker
+        formControlName="time"
+        [nzMinuteStep]="30"
+        [nzUse12Hours]="true"
+        nzFormat="h:mm a"
+      ></nz-time-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 6 }">
+    <nz-form-control nzErrorTip="Please select starting City Name!">
+      <nz-select formControlName="startingCity" (ngModelChange)="RSPchanged()">
+        <nz-option nzValue="" nzLabel="Starting City" selected></nz-option>
+        <nz-option
+          nzValue="addis ababa / አዲስ አበባ"
+          nzLabel="addis ababa / አዲስ አበባ"
+        ></nz-option>
+        <nz-option
+          *ngFor="let city of citiesList"
+          [nzValue]="city"
+          [nzLabel]="city"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 6 }">
+    <nz-form-control nzErrorTip="Please select destination City Name!">
+      <nz-select
+        formControlName="destinationCity"
+        (ngModelChange)="RSPchanged()"
+      >
+        <nz-option nzValue="" nzLabel="Destination City" selected></nz-option>
+        <nz-option
+          nzValue="addis ababa / አዲስ አበባ"
+          nzLabel="addis ababa / አዲስ አበባ"
+        ></nz-option>
+        <nz-option
+          *ngFor="let city of citiesList"
+          [nzValue]="city"
+          [nzLabel]="city"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-col nzSpan="24" [nzMd]="{ span: 6 }">
+    <nz-form-control nzErrorTip="Please select Bus!">
+      <input nz-input formControlName="busNo" />
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<br />
+<!-- <span>TRIP STARTING PLACES LIST; SELECT AT LEAST ONE</span> <br />
+<nz-checkbox-group
+  [(ngModel)]="SPList"
+  (ngModelChange)="log(SPList)"
+></nz-checkbox-group> -->
+<span *ngIf="returningTrip"
+  >TRIP STARTING PLACES LIST; SELECT AT LEAST ONE</span
+>
+<br *ngIf="returningTrip" />
+<nz-checkbox-group
+  *ngIf="returningTrip"
+  [(ngModel)]="returnSPList"
+  (ngModelChange)="log('returnTrip')"
+></nz-checkbox-group>
+<br *ngIf="returningTrip" />
+<br *ngIf="returningTrip" />
+<button nz-button nzType="primary" (click)="submitForm()">
+  <i nz-icon nzType="check" nzTheme="outline"></i>Add Trip
+</button>
+<nz-modal
+  [(nzVisible)]="isModalVisible"
+  nzTitle="Please Select Driver"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+>
+  <ng-container *nzModalContent>
+    <nz-radio-group
+      [(ngModel)]="selectedDriver"
+      *ngFor="let driver of driversList"
+    >
+      <label nz-radio [nzValue]="driver">{{ driver }}</label>
+      <!-- <label nz-radio nzValue="C">C</label>
+      <label nz-radio nzValue="D">D</label> -->
+    </nz-radio-group>
+  </ng-container>
+</nz-modal>

@@ -1,0 +1,43 @@
+div {
+  width: 100%;
+}
+
+.demo-loadmore-list {
+  min-height: 350px;
+  width: 100%;
+}
+
+li {
+  background-color: whitesmoke;
+  margin-bottom: 5px;
+}
+
+.progress-div {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+progress {
+  text-align: center;
+  height: 0.5em;
+  width: 100%;
+  -webkit-appearance: none;
+  border: none;
+}
+progress:before {
+  content: attr(data-label);
+  font-size: 0.8em;
+  vertical-align: 0;
+}
+progress::-webkit-progress-bar {
+  background-color: #c9c9c9;
+}
+progress::-webkit-progress-value,
+progress::-moz-progress-bar {
+  background-color: #7cc4ff;
+}
+
+.header {
+  /* margin: auto; */
+  text-align: center;
+}

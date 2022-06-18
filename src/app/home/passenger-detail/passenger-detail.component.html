@@ -1,0 +1,157 @@
+<nz-row>
+  <nz-col nzSpan="10">
+    <form
+      nz-form
+      [formGroup]="validateForm"
+      class="login-form"
+      (ngSubmit)="submitForm()"
+    >
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your fullname!">
+          <nz-input-group nzPrefixIcon="user">
+            <input
+              type="text"
+              nz-input
+              formControlName="fullName"
+              placeholder="FullName"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Phone Number!">
+          <nz-input-group nzPrefixIcon="lock">
+            <input
+              type="text"
+              nz-input
+              formControlName="phoneNumber"
+              placeholder="Phone Number"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Departure Place!">
+          <nz-select formControlName="startingPlace">
+            <nz-option nzValue="" nzLabel="Select Departure Place"></nz-option>
+            <nz-option
+              *ngFor="let place of startingPlaces"
+              [nzValue]="[place]"
+              [nzLabel]="place.split(' / ')[0]"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <div nz-row class="login-form-margin" *ngIf="seatPreview">
+        <div nz-col [nzSpan]="24">
+          <span class="sss">Select Seat number</span>
+        </div>
+        <!-- <div nz-col [nzSpan]="12">
+      <a class="login-form-forgot">Forgot password</a>
+    </div> -->
+      </div>
+      <div class="seat numbers" *ngIf="seatPreview">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please Select Seat Number!">
+            <nz-radio-group formControlName="seat">
+              <label *ngFor="let seat of seats" nz-radio [nzValue]="seat"
+                >{{ seat }}</label
+              >
+            </nz-radio-group>
+          </nz-form-control></nz-form-item
+        >
+      </div>
+      <div nz-row class="login-form-margin">
+        <div nz-col [nzSpan]="24">
+          <span class="sss">Select Seat Side</span>
+        </div>
+        <!-- <div nz-col [nzSpan]="12">
+      <a class="login-form-forgot">Forgot password</a>
+    </div> -->
+      </div>
+      <div nz-row class="seat_simulator_parent">
+        <button
+          nz-col
+          nzSpan="5"
+          [nzMd]="{ span: 3 }"
+          nz-button
+          type="button"
+          class="seat_simulator"
+          nzType="dashed"
+          (click)="availableSeats(1)"
+        >
+          L1
+        </button>
+        <button
+          nz-col
+          nzSpan="5"
+          [nzMd]="{ span: 3 }"
+          nz-button
+          type="button"
+          class="seat_simulator"
+          nzType="dashed"
+          (click)="availableSeats(2)"
+        >
+          L2
+        </button>
+        <button
+          nz-col
+          nzSpan="5"
+          [nzMd]="{ span: 3 }"
+          nz-button
+          type="button"
+          class="seat_simulator"
+          nzType="dashed"
+          (click)="availableSeats(5)"
+        >
+          M
+        </button>
+        <button
+          nz-col
+          nzSpan="5"
+          [nzMd]="{ span: 3 }"
+          nz-button
+          type="button"
+          class="seat_simulator"
+          nzType="dashed"
+          (click)="availableSeats(3)"
+        >
+          R2
+        </button>
+
+        <button
+          nz-col
+          nzSpan="5"
+          type="button"
+          [nzMd]="{ span: 3 }"
+          nz-button
+          class="seat_simulator"
+          nzType="dashed"
+          (click)="availableSeats(4)"
+        >
+          R1
+        </button>
+      </div>
+      <div nz-row class="login-form-margin">
+        <div nz-col [nzSpan]="12">
+          <label nz-checkbox formControlName="terms">
+            <span>Terms & Conditions</span>
+          </label>
+        </div>
+        <!-- <div nz-col [nzSpan]="12">
+      <a class="login-form-forgot">Forgot password</a>
+    </div> -->
+      </div>
+      <button
+        nz-button
+        class="login-form-button login-form-margin"
+        [nzType]="'primary'"
+        [disabled]="!validateForm.value.terms"
+      >
+        Confirm
+      </button>
+    </form>
+  </nz-col>
+  <nz-col nzSpan="12"> </nz-col>
+</nz-row>
